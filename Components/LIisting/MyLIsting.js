@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import { width, height } from '../Globals/getDImensions';
 import { MaterialIcons } from 'react-native-vector-icons';
@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import MainHeader from '../Globals/Branding/MainHeader';
 
-
+import { fetchProperties } from '../Global/Calls/Api_Calling';
 const data = [
     {
         id: 1,
@@ -59,48 +59,89 @@ const data = [
 
 const MyListingsScreen = () => {
   const navigation = useNavigation();
+  const [properties, setProperties] = useState([]); // State for storing the fetched data
+  useEffect(() => {
+    const getProperties = async () => {
+      const data = await fetchProperties();
+      setProperties(data); // Update state with the API data
+    };
+    getProperties();
+  }, []);
 
   const handleExit = () => {
     // Navigate to another screen or exit the app
   };
 
-  const renderItem = ({item}) => (
-    <TouchableOpacity
-    onPress={()=> navigation.navigate("AddFloorScreen")}
-    >
-
-  <ImageBackground source={{uri:item.url}} style={styles.propertyBox}>
+  const renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => navigation.navigate("PropertyDetailsScreen",{property:item})}>
+      <ImageBackground source={{ uri: "https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg" }} style={styles.propertyBox}>
         <View style={styles.propertyDetailsContainer}>
-          <Text style={styles.price}>{item.cost}</Text>
+          <Text style={styles.price}>${item.price.toLocaleString()}</Text>
           <Text style={styles.propertyDetails}>
-            {item.details}
+            {item.address || "No Address Available"}
           </Text>
           <View style={styles.infoRow}>
-          <View style={styles.infoRow}>
-              {/* <MaterialIcons name="square-foot" size={20} color="#FFFFFF" />  */}
-            <Text style={styles.infoText}>
-              {item.sqfts} Sqfts
-            </Text>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoText}>
+                {item.size || "N/A"} Sqft
+              </Text>
             </View>
             <View style={styles.infoRow}>
-            {/* <MaterialIcons name="bed" size={20} color="#FFFFFF" />  */}
-         <Text style={styles.infoText}>
-              {item.bed} Bed
-            </Text>
-         </View>
-         <View style={styles.infoRow}>
-         {/* <MaterialIcons name="bathtub" size={20} color="#FFFFFF" />  */}
-         <Text style={styles.infoText}>
-              {item.baths} Bath
-            </Text>
-         </View>
-            
+              <Text style={styles.infoText}>
+                {item.beds} Beds
+              </Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoText}>
+                {item.baths} Baths
+              </Text>
+            </View>
           </View>
         </View>
       </ImageBackground>
     </TouchableOpacity>
+  );
+  // const handleExit = () => {
+  //   // Navigate to another screen or exit the app
+  // };
 
-  )
+  // const renderItem = ({item}) => (
+  //   <TouchableOpacity
+  //   onPress={()=> navigation.navigate("AddFloorScreen")}
+  //   >
+
+  // <ImageBackground source={{uri:item.url}} style={styles.propertyBox}>
+  //       <View style={styles.propertyDetailsContainer}>
+  //         <Text style={styles.price}>{item.cost}</Text>
+  //         <Text style={styles.propertyDetails}>
+  //           {item.details}
+  //         </Text>
+  //         <View style={styles.infoRow}>
+  //         <View style={styles.infoRow}>
+  //             {/* <MaterialIcons name="square-foot" size={20} color="#FFFFFF" />  */}
+  //           <Text style={styles.infoText}>
+  //             {item.sqfts} Sqfts
+  //           </Text>
+  //           </View>
+  //           <View style={styles.infoRow}>
+  //           {/* <MaterialIcons name="bed" size={20} color="#FFFFFF" />  */}
+  //        <Text style={styles.infoText}>
+  //             {item.bed} Bed
+  //           </Text>
+  //        </View>
+  //        <View style={styles.infoRow}>
+  //        {/* <MaterialIcons name="bathtub" size={20} color="#FFFFFF" />  */}
+  //        <Text style={styles.infoText}>
+  //             {item.baths} Bath
+  //           </Text>
+  //        </View>
+            
+  //         </View>
+  //       </View>
+  //     </ImageBackground>
+  //   </TouchableOpacity>
+
+  // )
 
   return (
     <View style={styles.container}>
@@ -116,18 +157,14 @@ const MyListingsScreen = () => {
       </Text>
 
       {/* First Property Box */}
-   
-
       {/* Second Property Box */}
       <View style={styles.listWRapper}>
-
-    
-<FlatList
-data={data}
-renderItem={renderItem}
-
-/>
-</View>
+      <FlatList
+          data={properties} // Use the fetched data
+          renderItem={renderItem}
+          keyExtractor={(item) => item.property_id} // Unique key for each item
+        />
+     </View>
 
       {/* Exit Button */}
       <TouchableOpacity style={styles.exitButton} onPress={handleExit}>
@@ -222,3 +259,160 @@ const styles = StyleSheet.create({
 });
 
 export default MyListingsScreen;
+
+// import React, { useEffect, useState } from 'react';
+// import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+// import { width, height } from '../Globals/getDImensions';
+// import { useNavigation } from '@react-navigation/native';
+// import MainHeader from '../Globals/Branding/MainHeader';
+// // import { fetchProperties } from '../api/apiService';  // Import your API service
+// import { fetchProperties } from '../Global/Calls/Api_Calling';
+// const MyListingsScreen = () => {
+//   const [properties, setProperties] = useState([]); // State for storing the fetched data
+//   const navigation = useNavigation();
+
+//   // Fetch the properties when the component mounts
+//   useEffect(() => {
+//     const getProperties = async () => {
+//       const data = await fetchProperties();
+//       setProperties(data); // Update state with the API data
+//     };
+//     getProperties();
+//   }, []);
+
+//   const handleExit = () => {
+//     // Navigate to another screen or exit the app
+//   };
+
+//   const renderItem = ({ item }) => (
+//     <TouchableOpacity onPress={() => navigation.navigate("AddFloorScreen")}>
+//       <ImageBackground source={{ uri: "https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg" }} style={styles.propertyBox}>
+//         <View style={styles.propertyDetailsContainer}>
+//           <Text style={styles.price}>${item.price.toLocaleString()}</Text>
+//           <Text style={styles.propertyDetails}>
+//             {item.address || "No Address Available"}
+//           </Text>
+//           <View style={styles.infoRow}>
+//             <View style={styles.infoRow}>
+//               <Text style={styles.infoText}>
+//                 {item.size || "N/A"} Sqft
+//               </Text>
+//             </View>
+//             <View style={styles.infoRow}>
+//               <Text style={styles.infoText}>
+//                 {item.beds} Beds
+//               </Text>
+//             </View>
+//             <View style={styles.infoRow}>
+//               <Text style={styles.infoText}>
+//                 {item.baths} Baths
+//               </Text>
+//             </View>
+//           </View>
+//         </View>
+//       </ImageBackground>
+//     </TouchableOpacity>
+//   );
+
+//   return (
+//     <View style={styles.container}>
+//       {/* Header */}
+//       <MainHeader screenName="My Listings" />
+
+//       {/* Description */}
+//       <Text style={styles.description}>
+//         <Text style={{ fontWeight: 'bold' }}>
+//           Your properties are ready for a virtual 3D tour!{'\n'}
+//         </Text>
+//         Choose a listing to get started:
+//       </Text>
+
+//       {/* Property List */}
+//       <View style={styles.listWrapper}>
+        // <FlatList
+        //   data={properties} // Use the fetched data
+        //   renderItem={renderItem}
+        //   keyExtractor={(item) => item.property_id} // Unique key for each item
+        // />
+//       </View>
+
+//       {/* Exit Button */}
+//       <TouchableOpacity style={styles.exitButton} onPress={handleExit}>
+//         <Text style={styles.exitButtonText}>Exit</Text>
+//       </TouchableOpacity>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#FFFFFF',
+//     paddingHorizontal: width * 0.05,
+//     alignItems: 'center',
+//   },
+//   description: {
+//     marginVertical: height * 0.02,
+//     marginTop: height * 0.04,
+//     fontSize: 13,
+//     color: '#344054',
+//     fontWeight: '400',
+//   },
+//   listWrapper: {
+//     width: width / 1.1,
+//     height: height / 1.4,
+//   },
+//   propertyBox: {
+//     width: '100%',
+//     height: height * 0.3,
+//     marginBottom: height * 0.03,
+//     borderRadius: 15,
+//     overflow: 'hidden',
+//     justifyContent: 'flex-end',
+//     elevation: 2,
+//     shadowColor: "black"
+//   },
+//   propertyDetailsContainer: {
+//     backgroundColor: 'rgba(0, 0, 0, 0.6)',
+//     padding: width * 0.04,
+//   },
+//   price: {
+//     fontSize: 21,
+//     color: '#FFFFFF',
+//     fontWeight: 'bold',
+//   },
+//   propertyDetails: {
+//     fontSize: 12.79,
+//     color: '#FFFFFF',
+//     marginBottom: height * 0.01,
+//   },
+//   infoRow: {
+//     flexDirection: 'row',
+//     justifyContent: 'space-between',
+//     alignItems: 'center',
+//   },
+//   infoText: {
+//     fontSize: 12.79,
+//     color: '#FFFFFF',
+//     alignItems: 'center',
+//     textAlign: 'center',
+//   },
+//   exitButton: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     borderColor: '#FE6D2B',
+//     borderWidth: 1,
+//     paddingVertical: height * 0.015,
+//     paddingHorizontal: width * 0.12,
+//     marginTop: height * 0.015,
+//     borderRadius: 8,
+//   },
+//   exitButtonText: {
+//     fontSize: 16,
+//     color: '#FE6D2B',
+//     fontWeight: 'bold',
+//   },
+// });
+
+// export default MyListingsScreen;

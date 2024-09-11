@@ -75,14 +75,14 @@ const HomeScreen = () => {
                     title={"1. List Your Property:"}
                     description={"If you haven’t listed your property yet, you need to create a new listing first. Once your property is listed, you'll be able to capture a 3D tour."}
                     btnTxt={"Create New Listing"}
-                    routeTo={"AddFloorScreen"}
+                    routeTo={"AddPropertyScreen"}
                 />
                 <BoxView 
                     logo={homeLogo2}
                     title={"2. Capture a 3D Tour:"}
                     description={"If you already have a property listed, you can capture and upload a 3D tour to showcase it in detail."}
                     btnTxt={"Capture 3D Tour for Existing Listing"}
-                    routeTo={"CaptureTourScreen"}
+                    routeTo={"MyListingsScreen"}
                 />
                 <TouchableOpacity onPress={() => navigateWithFadeOut("MyListingsScreen")} style={styles.resumeButton}>
                     <Text style={styles.resumeButtonText}>Resume Draft</Text>

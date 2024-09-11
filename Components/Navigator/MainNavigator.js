@@ -11,6 +11,9 @@ import MyListingsScreen from '../LIisting/MyLIsting';
 import CaptureTourScreen from '../BeginScan/BeginScan';
 import AddFloorScreen from '../LIsting/CreateLIsting';
 import SnapShotScreen from '../CaptureModules/SnapshotScreen';
+import PropertyDetailsScreen from '../PropertyDetails/PropertyDetails';
+import AddPropertyScreen from '../add_property/Add_property';
+import ImageGridScreen from '../ImageGrid/ImageGrid';
 
 
 LogBox.ignoreAllLogs()
@@ -19,7 +22,7 @@ const Stack = createNativeStackNavigator();
 const MainStackNav = () => {
 return( 
     <NavigationContainer>
-    <Stack.Navigator initialRouteName={"View"} screenOptions={{
+    <Stack.Navigator initialRouteName={"OnBoardScreen"} screenOptions={{
       headerShown: false
     }}
     >
@@ -33,6 +36,11 @@ return(
         <Stack.Screen name="CaptureTourScreen" component={CaptureTourScreen}/>
         <Stack.Screen name="AddFloorScreen" component={AddFloorScreen} />
         <Stack.Screen name="SnapShotScreen" component={SnapShotScreen} />
+        <Stack.Screen name="PropertyDetailsScreen" component={PropertyDetailsScreen} />
+        <Stack.Screen name="AddPropertyScreen" component={AddPropertyScreen} />
+        <Stack.Screen name="ImageGridScreen" component={ImageGridScreen} />
+
+
     </Stack.Navigator>
     </NavigationContainer>
     )

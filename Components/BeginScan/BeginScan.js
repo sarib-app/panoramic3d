@@ -5,8 +5,12 @@ import { width,height } from '../Globals/getDImensions';
 import { MaterialIcons } from 'react-native-vector-icons';
 // import MainHeader from '../Globals/Branding/MainHeader';
 import MainHeader from '../Globals/Branding/MainHeader';
+import { useNavigation } from '@react-navigation/native';
 
-const CaptureTourScreen = () => {
+const CaptureTourScreen = ({route}) => {
+    const  {property_id} = route.params
+const navigation = useNavigation()
+
     return (
         <View style={styles.container}>
             {/* <MainHeader title="Capture Your 3D Tour" />  Reusable Header Component */}
@@ -40,12 +44,17 @@ const CaptureTourScreen = () => {
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.primaryButton}>
+                    <TouchableOpacity style={styles.primaryButton}
+                    onPress={()=> navigation.navigate("AddFloorScreen",{property_id:property_id})                }
+                    >
                         <Text style={styles.primaryButtonText}>Begin 3D Tour Capture</Text>
                         {/* <MaterialIcons name="play-arrow" size={24} color="#FFFFFF" /> */}
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.secondaryButton}>
+                    <TouchableOpacity
+                    onPress={()=> navigation.goBack()}
+                    
+                    style={styles.secondaryButton}>
                         <Text style={styles.secondaryButtonText}>Choose Another Property</Text>
                     </TouchableOpacity>
                 </View>

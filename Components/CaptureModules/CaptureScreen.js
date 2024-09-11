@@ -7,15 +7,17 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import MainHeader from '../Globals/Branding/MainHeader';
 import { height, width } from '../Globals/getDImensions';
 
-function CapturePanoramaScreen() {
+function CapturePanoramaScreen({route}) {
+  const  {property_id} = route.params
+  const  {label} = route.params
+
+
   const navigation = useNavigation()
   const camera = useRef(null);
-  const viewShotRef = useRef(null);
   const devices = Camera.getAvailableCameraDevices();
   const device = getCameraDevice(devices, 'back');
   const [showCamera, setShowCamera] = useState(true);
   const [images, setImages] = useState([]);
-  const [panoramaUri, setPanoramaUri] = useState(null);
   const [step, setStep] = useState(1);
 
   const capturePhoto = async () => {
@@ -31,32 +33,25 @@ function CapturePanoramaScreen() {
   };
 
   const stopPanoramaCapture = () => {
-    setShowCamera(false);
     if (images.length > 0) {
+      setShowCamera(false);
       setStep(2); // Move to the next step after capturing
     } else {
       Alert.alert('No Images Captured', 'Please try again.');
     }
   };
 
-  const saveCapturedImages = async () => {
-    try {
-      const uri = await captureRef(viewShotRef, {
-        format: 'jpg',
-        quality: 0.8,
-      });
-      setPanoramaUri(uri);
-      console.log('Panorama saved to', uri);
-      setStep(3); // Move to the next step after saving
-      navigation.navigate("View")
-    } catch (error) {
-      console.error('Error saving panorama', error);
-    }
-  
-  };
+
 
   const handleNext = () => {
-    navigation.navigate("SnapShotScreen",{images:images})
+
+    if(images.length > 0){
+
+      navigation.navigate("SnapShotScreen",{images:images,property_id:property_id,label:label})
+    }
+    else{
+      Alert.alert("Wait","Please click one or more thean one image")
+    }
 
     // setStep(3);
   };
@@ -147,26 +142,7 @@ setShowCamera(true)
         </>
       )}
 
-      {step === 3 && (
-        <View
-        style={{alignItems:"center"}}
-        >
-          {/* <Text style={styles.title}>Save your tour for Room1</Text> */}
-          <MainHeader 
-          screenName={"Save Progress"}
-          />
-          <ViewShot ref={viewShotRef} style={styles.viewShot} options={{ format: 'jpg', quality: 0.9 }}>
-            <ScrollView horizontal style={styles.scrollView}>
-              {images.map((uri, index) => (
-                <Image key={index} style={styles.image} source={{ uri: `file://${uri}` }} />
-              ))}
-            </ScrollView>
-          </ViewShot>
-          <TouchableOpacity style={styles.saveButton} onPress={saveCapturedImages}>
-            <Text style={styles.buttonText}>Save and View</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+
     </View>
   );
 }
