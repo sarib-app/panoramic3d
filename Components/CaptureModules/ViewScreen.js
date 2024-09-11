@@ -35,7 +35,7 @@ function onIndexChange(){
       style={styles.labelContaiuner}
       >
         <Text style={styles.labelText}>
-          {images[0]?.['3d_images'][0]?.room_label}
+          {images[index]?.['3d_images'][0]?.room_label}
         </Text>
       </View>
       <TouchableOpacity
@@ -57,7 +57,7 @@ function onIndexChange(){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems:"center"
+    // alignItems:"center"
   },
   webview: {
     flex: 1,
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     borderRadius:20,
     position:"absolute",
+    alignSelf:"center",
     top:50
   },
   labelText:{
@@ -84,6 +85,8 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     borderRadius:1000,
     position:"absolute",
+    alignSelf:"center",
+
     bottom:50
   },
   NxtButton_txt:{

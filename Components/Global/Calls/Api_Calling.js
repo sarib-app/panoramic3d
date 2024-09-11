@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 
 // apiService.js
-const token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyNjA1NzAzNiwianRpIjoiYzE2NmI2N2QtMTJhYi00ZTExLWJmZTEtNGY4MTY3ZmY2YzZlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InNhcmlia2hhbm44NEBnbWFpbC5jb20iLCJuYmYiOjE3MjYwNTcwMzYsImNzcmYiOiIyZTY5ZjNjYS1lMThkLTRhYzQtOGY1Yi0zMDZkMzFjOGY0MjIiLCJleHAiOjE3MjYwNjA2MzZ9.FkqsLcmZJNENKm7uiv7iNvB8scSz3VOMGSz22l7wIIc"
+const token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyNjA4NDk1MiwianRpIjoiM2JhNjFlNjQtYjBhMy00MTcyLThmNTItZTZiZGZkOWI3MGVjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InNhcmlia2hhbm44NEBnbWFpbC5jb20iLCJuYmYiOjE3MjYwODQ5NTIsImNzcmYiOiI5M2Y5MDA4OC05YmY3LTQxMWYtYjU4MC02MWU1ZWQ4YjI0YmYiLCJleHAiOjE3MjYwODg1NTJ9.6MCV81xySox8gsL0Yv5GCog_pmAWw0ixT_fWABwwPHE"
 export const fetchProperties = async () => {
     const myHeaders = new Headers();
     myHeaders.append("Authorization", token); // Place the full token here
