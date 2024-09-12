@@ -5,7 +5,7 @@ import { WebView } from 'react-native-webview';
 import { width } from '../Globals/getDImensions';
 import ViewPanormaicModal from './ViewPanormaicModal';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import ViewStyles from './Viewer';
 const ViewScreen = ({route}) => {
 const {images} = route.params
 const [index,setIndex]=useState(0)
@@ -19,11 +19,11 @@ function onIndexChange(){
   }
 }
   return (
-    <View style={styles.container}>
+    <View style={ViewStyles.container}>
       {/* <WebView
       javaScriptEnabled={true}
         source={{ uri: 'https://360panoramic.netlify.app/' }} // Replace with your deployed URL
-        style={styles.webview}
+        style={ViewStyles.webview}
       /> */}
       {
         images && 
@@ -32,17 +32,17 @@ function onIndexChange(){
       uri={`https://realestate3d.netlify.app/?url=${images[index]?.['3d_images'][0]?.url}`}
       />
       <View
-      style={styles.labelContaiuner}
+      style={ViewStyles.labelContaiuner}
       >
-        <Text style={styles.labelText}>
-          {images[index]?.['3d_images'][0]?.room_label}
+        <Text style={ViewStyles.labelText}>
+          {images[index                                                                                                                               ]?.['3d_images'][0]?.room_label}
         </Text>
       </View>
       <TouchableOpacity
-      style={styles.NxtButton}
+      style={ViewStyles.NxtButton}
       onPress={()=> onIndexChange()}
       >
-        <Text style={styles.NxtButton_txt}>
+        <Text style={ViewStyles.NxtButton_txt}>
           Next
         </Text>
       </TouchableOpacity> 
@@ -53,46 +53,6 @@ function onIndexChange(){
       </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // alignItems:"center"
-  },
-  webview: {
-    flex: 1,
-  },
-  labelContaiuner:{
-    backgroundColor:"rgba(0,0,0,0.6)",
-    paddingVertical:10,
-    // paddingHorizontal:80,
-    width:width/2,
-    alignItems:"center",
-    justifyContent:"center",
-    borderRadius:20,
-    position:"absolute",
-    alignSelf:"center",
-    top:50
-  },
-  labelText:{
-    color:"white"
-  },
-  NxtButton:{
-    backgroundColor:"#FE6D2B",
-    // paddingVertical:10,
-    height:70,width:70,
-    alignItems:"center",
-    justifyContent:"center",
-    borderRadius:1000,
-    position:"absolute",
-    alignSelf:"center",
-
-    bottom:50
-  },
-  NxtButton_txt:{
-    color:"white"
-  }
-});
 
 export default ViewScreen;
 

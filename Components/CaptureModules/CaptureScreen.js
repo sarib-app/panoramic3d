@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MainHeader from '../Globals/Branding/MainHeader';
 import { height, width } from '../Globals/getDImensions';
-
+import CaptureStyles from './CaptureStyles';
 function CapturePanoramaScreen({route}) {
   const  {property_id} = route.params
   const  {label} = route.params
@@ -61,7 +61,7 @@ function CapturePanoramaScreen({route}) {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={CaptureStyles.container}>
       {step === 1 && showCamera && (
         <>
           <Camera
@@ -71,17 +71,17 @@ function CapturePanoramaScreen({route}) {
             isActive={showCamera}
             photo={true}
           />
-          <View style={styles.topMessage}>
+          <View style={CaptureStyles.topMessage}>
           <Text style={{textAlign:"center",fontSize:12}}>
             Try not to capture area which is already captured
           </Text>
           </View>
-          <View style={styles.captureControls}>
+          <View style={CaptureStyles.captureControls}>
           <TouchableOpacity 
-            // style={styles.captureButton} 
+            // style={CaptureStyles.captureButton} 
             // onPress={capturePhoto}
             >
-              {/* <Text style={styles.buttonText}>Capture Photo</Text> */}
+              {/* <Text style={CaptureStyles.buttonText}>Capture Photo</Text> */}
               <Ionicons 
               name="camera-outline"
               size={50}
@@ -89,9 +89,9 @@ function CapturePanoramaScreen({route}) {
               />
             </TouchableOpacity>
             <TouchableOpacity 
-            // style={styles.captureButton} 
+            // style={CaptureStyles.captureButton} 
             onPress={capturePhoto}>
-              {/* <Text style={styles.buttonText}>Capture Photo</Text> */}
+              {/* <Text style={CaptureStyles.buttonText}>Capture Photo</Text> */}
               <Ionicons 
               name="camera-outline"
               size={50}
@@ -105,9 +105,9 @@ function CapturePanoramaScreen({route}) {
               />
             </TouchableOpacity>
           </View>
-          <ScrollView horizontal style={styles.thumbnailScroll}>
+          <ScrollView horizontal style={CaptureStyles.thumbnailScroll}>
             {images.map((uri, index) => (
-              <Image key={index} style={styles.thumbnail} source={{ uri: `file://${uri}` }} />
+              <Image key={index} style={CaptureStyles.thumbnail} source={{ uri: `file://${uri}` }} />
             ))}
           </ScrollView>
         </>
@@ -115,28 +115,28 @@ function CapturePanoramaScreen({route}) {
 
       {step === 2 && (
         <>
-          {/* <Text style={styles.title}>Save your tour for Room1</Text>
+          {/* <Text style={CaptureStyles.title}>Save your tour for Room1</Text>
            */}
             <MainHeader screenName="Finalize Images" />
 
-          <ScrollView contentContainerStyle={styles.imageGrid}>
+          <ScrollView contentContainerStyle={CaptureStyles.imageGrid}>
             {images.map((uri, index) => (
-              <Image key={index} style={styles.gridImage} source={{ uri: `file://${uri}` }} />
+              <Image key={index} style={CaptureStyles.gridImage} source={{ uri: `file://${uri}` }} />
             ))}
           </ScrollView>
           <TouchableOpacity
           style={{position:"absolute",bottom:20,alignItems:"center"}}
           >
 
-          <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
-            <Text style={styles.buttonText}>Let's Go</Text>
+          <TouchableOpacity style={CaptureStyles.nextButton} onPress={handleNext}>
+            <Text style={CaptureStyles.buttonText}>Let's Go</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.secondaryButton} onPress={()=>{
+          <TouchableOpacity style={CaptureStyles.secondaryButton} onPress={()=>{
             setStep(1)
 setShowCamera(true)
 
           }}>
-            <Text style={styles.secondaryButtonText}>Take More</Text>
+            <Text style={CaptureStyles.secondaryButtonText}>Take More</Text>
           </TouchableOpacity>
           </TouchableOpacity>
         </>
@@ -147,144 +147,5 @@ setShowCamera(true)
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    // justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginVertical: 20,
-    color: '#333',
-    alignSelf:'center'
-  },
-  captureControls: {
-    position: 'absolute',
-    bottom: 90,
-    flexDirection:"row",
-    width: '100%',
-    padding: 20,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  topMessage:{
-    position: 'absolute',
-    top: 30,
-    // flexDirection:"row",
-    width: '70%',
-    padding: 10,
-    borderRadius:40,
-    backgroundColor:"rgba(0,0,0,0.5)",
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  captureButton: {
-    marginBottom: 20,
-    height: 50,
-    width: 200,
-    borderRadius: 25,
-    backgroundColor: '#4CAF50',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  
-  stopButton: {
-    // height: 50,
-    paddingVertical:!5,
-    paddingHorizontal:20,
-    // width: 200,
-    borderRadius: 25,
-    backgroundColor: '#FF5252',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 13,
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-    // marginRight: 10,
-  },
-  secondaryButtonText: {
-    fontSize: 13,
-    color: '#FE6D2B',
-    fontWeight: 'bold',
-},
-  thumbnailScroll: {
-    position: 'absolute',
-    bottom: 0,
-    height: 100,
-    width: '100%',
-  },
-  thumbnail: {
-    width: 80,
-    height: 80,
-    margin: 5,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#ffffff',
-  },
-  imageGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop:15,
-    justifyContent: 'center',
-  },
-  gridImage: {
-    width: 100,
-    height: 150,
-    // aspectRatio:1/9,
-    margin: 5,
-    borderRadius: 10,
-    borderColor: '#DDD',
-    borderWidth: 1,
-    shadowColor:"rgba(0,0,0,0.8)",
-    shadowOpacity:2,
-    elevation:4
-  },
-  nextButton: {
-    // marginTop: 20
-    // position:"absolute",
-    marginBottom:height * 0.02,
-    backgroundColor: '#FE6D2B',
-    paddingVertical: height * 0.015,
-    paddingHorizontal: width * 0.1,
-    borderRadius: 8,
-
-  },
-  secondaryButton: {
-    borderWidth: 2,
-    borderColor: '#FE6D2B',
-    paddingVertical: height * 0.015,
-    paddingHorizontal: width * 0.1,
-    borderRadius: 8,
-},
-  saveButton: {
-    marginTop: 20,
-    height: 50,
-    width: 200,
-    borderRadius: 25,
-    backgroundColor: '#FF8C00',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf:'center'
-  },
-  scrollView: {
-    width: '100%',
-    height: 200,
-  },
-  image: {
-    width: 150,
-    height: '100%',
-    marginRight: 5,
-  },
-  viewShot: {
-    width: '100%',
-    height: 200,
-    marginTop:20
-  },
-});
 
 export default CapturePanoramaScreen;

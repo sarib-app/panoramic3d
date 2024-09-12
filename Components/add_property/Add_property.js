@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 
 import { width, height } from '../Globals/getDImensions';
 import MainHeader from '../Globals/Branding/MainHeader';
 // import { apiCall } from '../utils/api';  // Import the global API function
-
+import styles from './Styles';
 const AddPropertyScreen = () => {
   const [propertyData, setPropertyData] = useState({
     property_type: 'Single_Family',
@@ -134,42 +134,6 @@ const AddPropertyScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: width * 0.05,
-    alignItems: 'center',
-    paddingVertical: height * 0.02,
-  },
-  description: {
-    marginVertical: height * 0.02,
-    fontSize: 13,
-    color: '#344054',
-    fontWeight: '400',
-  },
-  input: {
-    width: width * 0.9,
-    height: height * 0.06,
-    borderColor: '#E0E0E0',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginVertical: height * 0.01,
-    backgroundColor: '#F9FAFB',
-  },
-  submitButton: {
-    backgroundColor: '#FE6D2B',
-    paddingVertical: height * 0.02,
-    paddingHorizontal: width * 0.2,
-    borderRadius: 8,
-    marginTop: height * 0.03,
-  },
-  submitButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
+
 
 export default AddPropertyScreen;
